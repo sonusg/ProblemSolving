@@ -1,0 +1,33 @@
+1class Solution {
+2public:
+3    bool dfs(int node, int color,vector<int>& colors, vector<vector<int>>& graph){
+4     colors[node]=color;
+5
+6     for(auto it: graph[node]){
+7        if(colors[it] == -1){
+8            if(!dfs(it, !color, colors, graph)){
+9                return false;
+10            }
+11        }else if(colors[it]==color){
+12            return false;
+13        }
+14     }
+15     return true;
+16    }
+17    bool isBipartite(vector<vector<int>>& graph) {
+18        int n = graph.size();
+19
+20        vector<int> colors(n, -1);
+21
+22        for(int i =0; i<n; i++){
+23            if(colors[i]==-1){
+24               if( dfs(i, 0, colors, graph)==false){
+25                return false;
+26               }
+27            }
+28        }
+29        return true;
+30    }
+31};
+32//TC: 0(V+E) where V is the number of Vertices and E is the number of Edges
+33//SC: 0(V) where V is number of vertices to store colors  
